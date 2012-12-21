@@ -68,7 +68,7 @@ class Man(GameObject,GameEventListener):
 
 class GameState(State,SystemEventListener):
 
-   def __init__(self):
+   def __init__(self, screen_size):
       """
       Note - states implement the SystemEventListener interface, but they
              do not directly listen to the system events manager.  Events
@@ -77,6 +77,8 @@ class GameState(State,SystemEventListener):
       """
       State.__init__(self)
       self.game_event_manager = GameEventManager()
+      
+      self.screen_size = screen_size
       
       self.man = Man(self.game_event_manager,(240,240))
       self.game_objects.append(self.man)
