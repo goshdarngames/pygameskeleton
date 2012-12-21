@@ -4,7 +4,7 @@
 # State-based model that interpets input and generates events to alert views
 # to changes.
 ##############################################################################
-# 06/12 - Gary Fleming
+# 06/12 - Flembobs
 ##############################################################################
 
 import pygame

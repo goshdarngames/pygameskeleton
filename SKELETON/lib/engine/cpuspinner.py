@@ -4,7 +4,7 @@
 # Class used to keep the game looping.  Generates a tick event each time
 # the game loops.
 ##############################################################################
-# 06/12 - Gary Fleming
+# 06/12 - Flembobs
 ##############################################################################
 
 from systemevents import *

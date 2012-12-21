@@ -4,7 +4,7 @@
 # Definitions of all system events monitored by the game engine's main
 # event manager.
 ##############################################################################
-# 06/12 - Gary Fleming
+# 06/12 - Flembobs
 ##############################################################################
 
 from abs.events import *
