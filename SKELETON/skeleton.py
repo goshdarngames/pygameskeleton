@@ -53,7 +53,7 @@ class GameEngine:
       
       #create model
       self.model = Model(self.system_event_manager)
-      self.model.change_state(GameState())
+      self.model.change_state(GameState(SCREEN_SIZE))
       
       #create views
       self.pygame_view = PygameView(self.system_event_manager,GAME_NAME, \
