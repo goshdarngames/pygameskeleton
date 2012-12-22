@@ -8,19 +8,13 @@
 
 class State:
    
-   def __init__(self):
+   def __init__(self,model):
       """
       Creates a state with a null reference to the model and an empty list
       of game objects.
       """
-      self.model = None
-      self.game_objects = []
-   
-   def register_model(self,model):
-      """
-      Registers the model with the state.
-      """
       self.model = model
+      self.game_objects = []
       
    def get_game_objects(self):
       """
