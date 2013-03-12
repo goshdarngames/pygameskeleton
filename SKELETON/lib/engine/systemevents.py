@@ -7,7 +7,8 @@
 # 06/12 - Flembobs
 ##############################################################################
 
-from abs.events import *
+from events import *
+from weakref import WeakKeyDictionary 
 
 ##############################################################################
 # EVENTS
@@ -92,11 +93,17 @@ class ModelUpdated(Event):
 ##############################################################################
 
 class SystemEventListener(Listener):
-   pass
+   
+   def __init__(self):
+      """
+      Creates a System Event Listener that will register itself with the
+      System Event Manager.
+      """
+      Listener.__init__(self,SystemEventManager)
 
 ##############################################################################
 # EVENTS MANAGER
 ##############################################################################
 
 class SystemEventManager(EventManager):
-   pass
+   listeners = WeakKeyDictionary()

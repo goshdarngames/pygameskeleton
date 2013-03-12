@@ -12,12 +12,9 @@ import pygame
 
 class PygameEventsManager(SystemEventListener):
 
-   def __init__(self,system_event_manager):
+   def __init__(self):
    
-      SystemEventListener.__init__(self,system_event_manager)
-   
-      #save reference to events manager for posting system events
-      self.system_event_manager = system_event_manager
+      SystemEventListener.__init__(self)
       
    #--------------------------------------------------------------------------
       
@@ -59,5 +56,5 @@ class PygameEventsManager(SystemEventListener):
                                                 pygame_event.buttons)
             
             #post the event that has been generated
-            self.system_event_manager.post(event_to_post)
+            SystemEventManager.post(event_to_post)
                

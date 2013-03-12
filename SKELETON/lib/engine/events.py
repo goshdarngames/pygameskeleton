@@ -2,8 +2,12 @@
 # events.py
 ##############################################################################
 # Contains superclasses for the event-driven mediator system.
+#
+# There is an interface for events and listeners.
+#
+# The EventManager class provides static methods for notifying listeners.
 ##############################################################################
-# 06/12 - Flembobs
+# 03/13 - Flembobs
 ##############################################################################
 
 from weakref import WeakKeyDictionary
@@ -43,24 +47,25 @@ class EventManager:
    dispatches events to them.
    """
    
-   def __init__(self):
-      self.listeners = WeakKeyDictionary()
+   #keys of this map are objects listening for events
+   listeners = WeakKeyDictionary()
       
    #--------------------------------------------------------------------------
    
-   def register_listener(self,listener):
-      self.listeners[listener] = 1
+   @classmethod
+   def register_listener(cls,listener):
+      cls.listeners[listener] = 1
       
    #--------------------------------------------------------------------------
-   
-   def unregister_listener(self,listener):
-      if listener in self.listeners.keys():
-         del self.listeners[listener]
+  
+   @classmethod 
+   def unregister_listener(cls,listener):
+      if listener in cls.listeners.keys():
+         del cls.listeners[listener]
          
    #--------------------------------------------------------------------------
    
-   def post(self,event):
-      for listener in self.listeners.keys():
+   @classmethod
+   def post(cls,event):
+      for listener in cls.listeners.keys():
          listener.notify(event)
-   
-   

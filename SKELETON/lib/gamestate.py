@@ -7,10 +7,10 @@
 ##############################################################################
 
 import pygame
-
-from engine.abs.gameobject import GameObject
-from engine.abs.state import State
-from engine.abs.events import *
+from weakref import WeakKeyDictionary       
+       
+from engine.model import *
+from engine.events import *
 from engine.systemevents import *
 
 ##############################################################################
@@ -33,10 +33,12 @@ class ManMoveRequest(Event):
 ##############################################################################
 
 class GameEventManager(EventManager):
-   pass
+   listeners = WeakKeyDictionary()
 
 class GameEventListener(Listener):
-   pass
+   
+   def __init__(self):
+      Listener.__init__(self,GameEventManager)
 
 ##############################################################################
 # GAME OBJECTS - MAN
@@ -44,8 +46,8 @@ class GameEventListener(Listener):
 
 class Man(GameObject,GameEventListener):
    
-   def __init__(self,game_event_manager,pos):
-      GameEventListener.__init__(self,game_event_manager)
+   def __init__(self,pos):
+      GameEventListener.__init__(self)
 
       self.pos = pos
       
@@ -69,18 +71,13 @@ class Man(GameObject,GameEventListener):
 class GameState(State,SystemEventListener):
 
    def __init__(self, model):
-      """
-      Note - states implement the SystemEventListener interface, but they
-             do not directly listen to the system events manager.  Events
-             are passed to them by the model.  Thus they do not call the
-             event listener super constructor.
-      """
+   
+      SystemEventListener.__init__(self)
       State.__init__(self,model)
-      self.game_event_manager = GameEventManager()
       
       self.screen_size = self.model.screen_size
       
-      self.man = Man(self.game_event_manager,(240,240))
+      self.man = Man((240,240))
       self.game_objects.append(self.man)
       
    #--------------------------------------------------------------------------
@@ -88,7 +85,7 @@ class GameState(State,SystemEventListener):
    def notify(self,event):
       if isinstance(event,KeyboardEvent):
          if event.key == pygame.K_ESCAPE:
-            self.model.system_event_manager.post(QuitEvent()) 
+            SystemEventManager.post(QuitEvent()) 
             
       if isinstance(event,KeyboardEvent):
          if event.type == pygame.KEYDOWN:
@@ -104,7 +101,7 @@ class GameState(State,SystemEventListener):
             if event.key == pygame.K_LEFT:
                move_request = ManMoveRequest((-16,0))
                
-            self.game_event_manager.post(move_request)
+            GameEventManager.post(move_request)
                
                
    

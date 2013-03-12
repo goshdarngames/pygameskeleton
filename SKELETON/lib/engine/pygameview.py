@@ -12,9 +12,9 @@ from systemevents import *
 
 class PygameView(SystemEventListener):
    
-   def __init__(self,system_event_manager,caption,size,bg_color):
+   def __init__(self,caption,size,bg_color):
    
-      SystemEventListener.__init__(self,system_event_manager)
+      SystemEventListener.__init__(self)
       
       os.environ["SDL_VIDEO_CENTERED"] = "1"
       pygame.display.set_caption(caption)
@@ -34,4 +34,3 @@ class PygameView(SystemEventListener):
             game_object.render(self.screen)
             
          pygame.display.flip()
-      

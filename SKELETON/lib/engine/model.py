@@ -12,10 +12,8 @@ from systemevents import *
 
 class Model(SystemEventListener):
 
-   def __init__(self,system_event_manager,screen_size):
-      SystemEventListener.__init__(self,system_event_manager)
-      self.system_event_manager = system_event_manager
-      
+   def __init__(self,screen_size):
+      SystemEventListener.__init__(self)      
       self.screen_size = screen_size
    
    #--------------------------------------------------------------------------
@@ -27,8 +25,41 @@ class Model(SystemEventListener):
       
    def notify(self,event):
       if self.state is not None:
-         self.state.notify(event)
          
          if isinstance(event,TickEvent):
-            self.system_event_manager.post(
-                                 ModelUpdated(self.state.get_game_objects()))   
+            self.state.process_tick()
+            SystemEventManager.post(ModelUpdated(self.state.game_objects))
+                                 
+                                 
+##############################################################################
+# GAME OBJECT
+##############################################################################
+
+class GameObject:
+   
+   def render(self, surface):
+      raise NotImplementedError
+      
+##############################################################################
+# STATE
+##############################################################################
+
+class State:
+   
+   def __init__(self,model):
+      """
+      Creates a state with a null reference to the model and an empty list
+      of game objects.
+      """
+      self.model = model
+      self.game_objects = []
+      
+   def process_tick(self):
+      """
+      Called by the model when it receives a TICK event.  Note - the state
+      handles ticks like this so that the model may generate a Model Updated
+      Event when the state has been updated.
+      
+      Tick Events should not be handled via the Listener interface.
+      """
+      pass

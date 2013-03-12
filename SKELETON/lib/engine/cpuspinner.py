@@ -12,12 +12,9 @@ import pygame
    
 class CPUSpinner(SystemEventListener):
 
-   def __init__(self,system_event_manager,fps):
+   def __init__(self,fps):
    
-      SystemEventListener.__init__(self,system_event_manager)
-   
-      #reference to the events manager
-      self.system_event_manager = system_event_manager
+      SystemEventListener.__init__(self)
       
       #desired FPS
       self.fps = fps
@@ -34,13 +31,10 @@ class CPUSpinner(SystemEventListener):
       while(self.running):
          self.clock.tick(self.fps)
          event = TickEvent()
-         self.system_event_manager.post(event)
+         SystemEventManager.post(event)
          
    #--------------------------------------------------------------------------
    
    def notify(self,event):
       if isinstance(event,QuitEvent):
          self.running = False
-      
-            
-      
