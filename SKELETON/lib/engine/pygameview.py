@@ -26,7 +26,7 @@ class PygameView(SystemEventListener):
       
    def notify(self, event):
       
-      if isinstance(event,ModelUpdated):
+      if isinstance(event,ModelUpdatedEvent):
          
          self.screen.fill(self.bg_color)
       

@@ -24,11 +24,8 @@ class Model(SystemEventListener):
    #--------------------------------------------------------------------------
       
    def notify(self,event):
-      if self.state is not None:
-         
-         if isinstance(event,TickEvent):
-            self.state.process_tick()
-            SystemEventManager.post(ModelUpdated(self.state.game_objects))
+      
+      pass
                                  
                                  
 ##############################################################################
