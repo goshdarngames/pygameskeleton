@@ -23,8 +23,7 @@ class Model(SystemEventListener):
       
    #--------------------------------------------------------------------------
       
-   def notify(self,event):
-      
+   def notify(self,event): 
       pass
                                  
                                  
@@ -34,7 +33,7 @@ class Model(SystemEventListener):
 
 class GameObject:
    
-   def render(self, surface):
+   def render(self, screen):
       raise NotImplementedError
       
 ##############################################################################
