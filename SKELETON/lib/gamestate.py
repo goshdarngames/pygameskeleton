@@ -112,7 +112,9 @@ class GameState(State,SystemEventListener,GUIEventListener):
       self.game_objects.append(self.colour_button)
       
       #create the static text displayed at the top left
-      static_text = Text((10,10),"Skeleton Game",(255,255,255),30)
+      static_text = Text("Skeleton Game",(255,255,255),30)
+      static_text.rect.left = 10
+      static_text.rect.top = 10
       self.game_objects.append(static_text)
       
       #create the text box that can be used to input text

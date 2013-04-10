@@ -14,6 +14,14 @@ from engine.model import GameObject
 from weakref import WeakKeyDictionary 
 
 ##############################################################################
+# CONSTANTS
+##############################################################################
+
+#Text input box ignores these keys so unprintable characters aren't input
+TEXT_BOX_IGNORE = [pygame.K_TAB,pygame.K_CLEAR,pygame.K_RETURN,
+                   pygame.K_PAUSE]
+
+##############################################################################
 # GUI EVENTS
 ##############################################################################
 
@@ -118,9 +126,8 @@ class Text(Image):
    Allows a string to be displayed on screen.
    """
 
-   def __init__(self,topleft,text,color,fontsize):
+   def __init__(self,text,color,fontsize):
       """
-      topleft - top left corner position the text should be drawn at
       text - the text to be displayed
       colour - the colour the text should be drawn
       """
@@ -128,7 +135,7 @@ class Text(Image):
       text_surf = pygame.font.SysFont("courier",fontsize,True).\
                                                      render(text,True,color)
                                                      
-      text_rect = pygame.Rect(topleft,(text_surf.get_width(),
+      text_rect = pygame.Rect((0,0),(text_surf.get_width(),
                                        text_surf.get_height()))
                                        
       Image.__init__(self,text_rect,text_surf)
@@ -219,10 +226,16 @@ class TextInputBox(Image,SystemEventListener):
          if event.type is not pygame.KEYDOWN:
             return
          
+         #check for delete
          if event.key is pygame.K_BACKSPACE or event.key is pygame.K_DELETE:
             self.text = self.text[:-1]
+            return
+            
+         #ignore special characters
+         if event.key in TEXT_BOX_IGNORE:
             return   
          
+         #try add the letter
          try:   
             self.text += chr(event.key)
          except ValueError:
