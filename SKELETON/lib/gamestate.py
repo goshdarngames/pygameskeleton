@@ -88,15 +88,13 @@ class Man(GameObject,GameEventListener):
 
 class GameState(State,SystemEventListener,GUIEventListener):
 
-   def __init__(self, model):
+   def __init__(self):
    
       SystemEventListener.__init__(self)
       GUIEventListener.__init__(self)
-      State.__init__(self,model)
       
-      
-      self.screen_size = self.model.screen_size
-      
+      self.game_objects = []
+        
       #create the man we can control with buttons
       self.man = Man((240,240))
       self.game_objects.append(self.man)

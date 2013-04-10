@@ -47,9 +47,8 @@ class GameEngine:
       self.cpu_spinner = CPUSpinner(FPS)
       self.pygame_events_manager = PygameEventsManager()
       
-      #create model
-      self.model = Model(SCREEN_SIZE)
-      self.model.change_state(GameState(self.model))
+      #init model
+      Model.change_state(GameState())
       
       #create views
       self.pygame_view = PygameView(GAME_NAME, SCREEN_SIZE, BG_COLOR)
