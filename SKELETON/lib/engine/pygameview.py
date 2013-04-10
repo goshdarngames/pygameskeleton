@@ -26,11 +26,11 @@ class PygameView(SystemEventListener):
       
    def notify(self, event):
       
-      if isinstance(event,ModelUpdatedEvent):
+      if isinstance(event,DrawRequestEvent):
          
          self.screen.fill(self.bg_color)
       
-         for game_object in event.game_objects:
+         for game_object in event.visible_objects:
             game_object.render(self.screen)
             
          pygame.display.flip()

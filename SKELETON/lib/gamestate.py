@@ -125,8 +125,7 @@ class GameState(State,SystemEventListener,GUIEventListener):
    def notify(self,event):
    
       if isinstance(event,TickEvent):
-         SystemEventManager.post(ModelUpdatedEvent(self.game_objects,
-                                                   self.game_objects))
+         SystemEventManager.post(DrawRequestEvent(self.game_objects))
    
       if isinstance(event,KeyboardEvent):
          if event.key == pygame.K_ESCAPE:
