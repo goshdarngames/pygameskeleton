@@ -153,6 +153,10 @@ class GameState(State,SystemEventListener,GUIEventListener):
       
          if event.button is self.colour_button:
             GameEventManager.post(ManColourChangeRequest())
+            
+      #test mouse over with a print
+      if isinstance(event,ButtonMouseOverEvent):
+         print "Mouse over: "+str(event.button)
                
                
    

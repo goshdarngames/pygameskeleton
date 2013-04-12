@@ -36,6 +36,17 @@ class ButtonClickedEvent(Event):
       """
       self.button = button
       
+class ButtonMouseOverEvent(Event):
+   """
+   Posted by a button when the mouse enters its rect.
+   """
+   
+   def __init__(self,button):
+      """
+      button - reference to the button that was mouse overed.
+      """                                                    
+      self.button = button
+            
 ##############################################################################
 # GUI EVENT MANAGER
 ##############################################################################
@@ -91,6 +102,9 @@ class Button(Image,SystemEventListener):
       self.normal_surf = normal_surf
       self.mouse_over_surf = mouse_over_surf
       
+      #is true if the mouse is within the button's rect
+      self._mouse_over = False
+      
    #--------------------------------------------------------------------------
       
    def notify(self,event):
@@ -104,8 +118,19 @@ class Button(Image,SystemEventListener):
             
          #check for collision
          if self.rect.collidepoint(event.pos):
-            self.surf = self.mouse_over_surf
+            
+            #test if we need to post a mouse over event
+            if not self._mouse_over:
+               self._mouse_over = True
+               GUIEventManager.post(ButtonMouseOverEvent(self))
+            
+            #change the surf to the mouse over surf
+            if self.mouse_over_surf is not None:
+               self.surf = self.mouse_over_surf
+         
+         #mouse not within button bounds
          else:
+            self._mouse_over = False
             self.surf = self.normal_surf
             
       #check for mouse click
